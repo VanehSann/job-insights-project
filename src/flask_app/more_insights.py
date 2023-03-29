@@ -3,7 +3,7 @@ from werkzeug.routing import BuildError
 
 
 def slice_jobs(jobs, initial_position, amount):
-    return jobs[initial_position: initial_position + amount]
+    return jobs[initial_position : initial_position + amount]
 
 
 def get_job(jobs, id_):

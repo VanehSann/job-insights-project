@@ -1,5 +1,8 @@
+import csv
 from functools import lru_cache
-from typing import List, Dict
+from typing import Dict, List
+
+# from src.insights.jobs import read
 
 
 @lru_cache
@@ -16,7 +19,13 @@ def read(path: str) -> List[Dict]:
     list
         List of rows as dicts
     """
-    raise NotImplementedError
+    with open(path) as csv_file:
+        file = csv.DictReader(csv_file)
+        return [line for line in file]
+        # result = []
+        # for line in file:
+        #      result.append(line)
+        #      return result
 
 
 def get_unique_job_types(path: str) -> List[str]:
@@ -34,7 +43,12 @@ def get_unique_job_types(path: str) -> List[str]:
     list
         List of unique job types
     """
-    raise NotImplementedError
+    file = read(path)
+    list = []
+    for line in file:
+        if line["job_type"] not in list:
+            list.append(line["job_type"])
+    return list
 
 
 def filter_by_job_type(jobs: List[Dict], job_type: str) -> List[Dict]:
@@ -52,4 +66,4 @@ def filter_by_job_type(jobs: List[Dict], job_type: str) -> List[Dict]:
     list
         List of jobs with provided job_type
     """
-    raise NotImplementedError
+    return [line for line in jobs if line["job_type"] == job_type]
